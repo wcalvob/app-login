@@ -1,5 +1,4 @@
 import React from "react";
-import "../css/index.css";
 import "../css/login.css";
 import imgUser from "../images/user.png";
 import axios from "axios";
@@ -40,7 +39,7 @@ class Login extends React.Component {
         localStorage.setItem("token", response.data.token);
         window.location.reload(true);
       })
-      .catch((error) => {
+      .catch(() => {
         this.setState({
           error: true,
           errorMsg: "Verifique que los datos ingresados sean los correctos",
@@ -50,8 +49,8 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className="app">
+        <header className="login">
           <div className="wrapper fadeInDown">
             <div id="formContent">
               {this.state.error === true && (
@@ -59,12 +58,7 @@ class Login extends React.Component {
               )}
 
               <div className="fadeIn first">
-                <img
-                  src={imgUser}
-                  className="img-user"
-                  id="ico"
-                  alt="User Icon"
-                />
+                <img src={imgUser} className="img-user" alt="User" />
               </div>
 
               <form method="post" onSubmit={this.submitHandler}>

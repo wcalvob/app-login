@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import "../css/index.css";
-import "../css/login.css";
 import axios from "axios";
+import imgConstruction from "../images/construction.png";
 
 /* obtener el token almacenado en el navegador */
 const accessToken = localStorage.getItem("token");
@@ -36,23 +35,28 @@ function Home() {
       const result = await axios.get(apiUrl);
       setUsers(result.data);
     } catch (err) {
-      setRequestError(err.message);
+      setRequestError("Error de conexión con el API");
+      console.log(requestError);
     }
   };
 
   fetchData();
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h3>Bienvenido(a)</h3>
-        <h2>
-          {users.name} {users.email}
-        </h2>
+    <div className="app">
+      <header className="header">
+        <h4>Bienvenido(a), {users.name} {users.email}</h4>
         <button className="btn btn-primary mt-3" onClick={() => signOff()}>
           Cerrar Sesión
         </button>
       </header>
+      <div className="fadeIn first">
+        <img
+          src={imgConstruction}
+          className="img-construction"
+          alt="Construction"
+        />
+      </div>
     </div>
   );
 }
