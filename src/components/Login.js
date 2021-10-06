@@ -5,7 +5,7 @@ import imgUser from "../images/user.png";
 import axios from "axios";
 
 class Login extends React.Component {
-  /* Estado para guardar valores de consulta */
+  /* declaración de estados */
   state = {
     form: {
       id: "",
@@ -15,12 +15,12 @@ class Login extends React.Component {
     errorMsg: "",
   };
 
-  /* Método para no refresh de la página */
+  /* método para no refresh de la página */
   submitHandler = (e) => {
     e.preventDefault();
   };
 
-  /* Método para obtener los valores de los input */
+  /* se obtienen los valores de los input */
   changeHandler = async (e) => {
     await this.setState({
       form: {
@@ -28,17 +28,17 @@ class Login extends React.Component {
         [e.target.name]: e.target.value,
       },
     });
-    /* console.log(this.state.form); */
   };
 
-  /* Método para conectar con el API y obtener los datos */
+  /* conexión con el API y obtención de resultados */
   buttonHandler = () => {
     let url = "http://camilo.touwolf.com:9101/api/v1/users/login";
     axios
       .post(url, this.state.form)
       .then((response) => {
-        /* Guardar el token en el almacenamiento local */
+        /* se guarda el token en el almacenamiento local */
         localStorage.setItem("token", response.data.token);
+        window.location.reload(true);
       })
       .catch((error) => {
         this.setState({
@@ -54,7 +54,6 @@ class Login extends React.Component {
         <header className="App-header">
           <div className="wrapper fadeInDown">
             <div id="formContent">
-              
               {this.state.error === true && (
                 <div className="alert alert-danger">{this.state.errorMsg}</div>
               )}

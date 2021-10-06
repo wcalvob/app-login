@@ -1,0 +1,103 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Simple API",
+    "description": "Simple API. <b>Base URL: http://camilo.touwolf.com:9101/api/v1</b>",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://camilo.touwolf.com:9101/api/v1",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [{ "Bearer JWT": [] }],
+  "tags": [{ "name": "users", "description": "Users API" }],
+  "paths": {
+    "/users/login": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Login user",
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Auth" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserToken" }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get authenticated user profile",
+        "operationId": "profile",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Auth": {
+        "required": ["id", "password"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Auth id (email, phone, username, legal ID)"
+          },
+          "password": { "type": "string", "description": "Auth password" }
+        }
+      },
+      "UserToken": {
+        "required": ["token"],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User authentication token"
+          }
+        }
+      },
+      "User": {
+        "required": ["email", "name"],
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "User name" },
+          "email": { "type": "string", "description": "User email" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer JWT": {
+        "type": "http",
+        "name": "Authorization",
+        "in": "header",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
